@@ -2,6 +2,6 @@ package msql_query_builder
 
 import "fmt"
 
-func test() {
+func Test() {
 	fmt.Println("Hello, World!")
 }
