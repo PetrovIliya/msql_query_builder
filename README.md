@@ -1,1 +1,3 @@
-# msql_query_builder
+# MySQL Query Builder
+
+Query Builder makes it easier to build queries for MySQL databases 
