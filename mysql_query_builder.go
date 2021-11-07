@@ -1,4 +1,4 @@
-package msql_query_builder
+package mysql_query_builder
 
 func Select(table string, alias string, selectStr string) *selectQueryBuilder {
 	return &selectQueryBuilder{table: table, selectStr: selectStr, alias: alias}

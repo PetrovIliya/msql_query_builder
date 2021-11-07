@@ -6,8 +6,8 @@ So, if your application relies heavily on MySQL database and using the repositor
 
 # Installation
 
-1. Add the dependency `github.com/PetrovIliya/msql_query_builde v1.0.0beta` to your go.mod file
-2. In the required file add import `qb "github.com/PetrovIliya/msql_query_builde"`
+1. Add the dependency `github.com/PetrovIliya/mysql_query_builder v1.0.1beta` to your go.mod file
+2. In the required file add import `qb "github.com/PetrovIliya/mysql_query_builder"`
 
 # Usage
 

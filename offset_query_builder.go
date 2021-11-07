@@ -1,4 +1,4 @@
-package msql_query_builder
+package mysql_query_builder
 
 import "strconv"
 

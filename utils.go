@@ -1,4 +1,4 @@
-package msql_query_builder
+package mysql_query_builder
 
 func escape(sql string) string {
 	dest := make([]byte, 0, 2*len(sql))
