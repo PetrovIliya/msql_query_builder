@@ -46,7 +46,7 @@ func (qb *joinQueryBuilder) getJoinsPart() string {
 	for i := 0; i < len(qb.joins); i++ {
 		currJoin := qb.joins[i]
 		joinPrefix := getJoinPrefix(currJoin.joinType)
-		currJoinStr := joinPrefix + " JOIN " + currJoin.table + " " + currJoin.alias + " ON " + currJoin.condition + " "
+		currJoinStr := joinPrefix + " JOIN `" + currJoin.table + "` " + currJoin.alias + " ON " + currJoin.condition + " "
 		joinPart += currJoinStr
 	}
 

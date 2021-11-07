@@ -92,6 +92,10 @@ func (qb *insertQueryBuilder) validate() error {
 		return errors.New("'table' param can not be empty")
 	}
 
+	if qb.insertString == "" {
+		return errors.New("insertString can not be empty")
+	}
+
 	return nil
 }
 
