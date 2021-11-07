@@ -87,10 +87,10 @@ Result: INSERT IGNORE INTO \`order\` (order_id, cost) VALUES (\'1\', \'3\')
 
 ## Delete
 
-    deleteSq := qb.Delete("menu_item", "mi", "mi.*")
-	deleteSq.InnerJoin("order", "o", "o.order_id = mi.order_id")
-	deleteSq.AndWhere("o.order_id = 1")
-    sqlStr, err := deleteSq.GetSql()
+    	deleteQb := qb.Delete("menu_item", "mi", "mi.*")
+	deleteQb.InnerJoin("order", "o", "o.order_id = mi.order_id")
+	deleteQb.AndWhere("o.order_id = 1")
+    	sqlStr, err := deleteQb.GetSql()
 
 # PS
 
