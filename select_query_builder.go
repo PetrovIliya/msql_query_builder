@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-type SelectQueryBuilder struct {
+type selectQueryBuilder struct {
 	joinQueryBuilder
 	whereQueryBuilder
 	offsetQueryBuilder
@@ -17,7 +17,7 @@ type SelectQueryBuilder struct {
 	orderBy   string
 }
 
-func (qb *SelectQueryBuilder) GetSql() (string, error) {
+func (qb *selectQueryBuilder) GetSql() (string, error) {
 	if err := qb.validate(); err != nil {
 		return "", err
 	}
@@ -34,18 +34,18 @@ func (qb *SelectQueryBuilder) GetSql() (string, error) {
 	return sql, nil
 }
 
-func (qb *SelectQueryBuilder) getSelectPart() string {
+func (qb *selectQueryBuilder) getSelectPart() string {
 	if qb.selectStr == "" {
 		qb.selectStr = "*"
 	}
 	return "SELECT " + qb.selectStr
 }
 
-func (qb *SelectQueryBuilder) getFromPart() string {
+func (qb *selectQueryBuilder) getFromPart() string {
 	return "FROM" + " `" + qb.table + "` " + qb.alias + " " + qb.getJoinsPart()
 }
 
-func (qb *SelectQueryBuilder) validate() error {
+func (qb *selectQueryBuilder) validate() error {
 	err := qb.whereQueryBuilder.validate()
 	if err != nil {
 		return err

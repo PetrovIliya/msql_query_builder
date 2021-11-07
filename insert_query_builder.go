@@ -2,16 +2,16 @@ package msql_query_builder
 
 import "errors"
 
-type InsertQueryBuilder struct {
+type insertQueryBuilder struct {
 	table                string
 	insertString         string
 	values               [][]string
 	ignore               bool
-	valuesSelectSubQuery *SelectQueryBuilder
-	valuesUnionSubQuery  *UnionSelectQueryBuilder
+	valuesSelectSubQuery *selectQueryBuilder
+	valuesUnionSubQuery  *unionSelectQueryBuilder
 }
 
-func (qb *InsertQueryBuilder) GetSql() (string, error) {
+func (qb *insertQueryBuilder) GetSql() (string, error) {
 	if err := qb.validate(); err != nil {
 		return "", err
 	}
@@ -23,29 +23,29 @@ func (qb *InsertQueryBuilder) GetSql() (string, error) {
 	return escape(qb.getInsertPart() + " " + valuesPart), nil
 }
 
-func (qb *InsertQueryBuilder) Ignore(ignore bool) {
+func (qb *insertQueryBuilder) Ignore(ignore bool) {
 	qb.ignore = ignore
 }
 
-func (qb *InsertQueryBuilder) Values(values [][]string) {
+func (qb *insertQueryBuilder) Values(values [][]string) {
 	qb.valuesUnionSubQuery = nil
 	qb.valuesSelectSubQuery = nil
 	qb.values = values
 }
 
-func (qb *InsertQueryBuilder) ValuesQuery(query *SelectQueryBuilder) {
+func (qb *insertQueryBuilder) ValuesQuery(query *selectQueryBuilder) {
 	qb.valuesUnionSubQuery = nil
 	qb.values = make([][]string, 0)
 	qb.valuesSelectSubQuery = query
 }
 
-func (qb *InsertQueryBuilder) ValuesUnionQuery(query *UnionSelectQueryBuilder) {
+func (qb *insertQueryBuilder) ValuesUnionQuery(query *unionSelectQueryBuilder) {
 	qb.valuesSelectSubQuery = nil
 	qb.values = make([][]string, 0)
 	qb.valuesUnionSubQuery = query
 }
 
-func (qb *InsertQueryBuilder) getInsertPart() string {
+func (qb *insertQueryBuilder) getInsertPart() string {
 	ignoreStr := ""
 	if qb.ignore {
 		ignoreStr = "IGNORE"
@@ -53,7 +53,7 @@ func (qb *InsertQueryBuilder) getInsertPart() string {
 	return "INSERT " + ignoreStr + " INTO `" + qb.table + "` " + qb.insertString
 }
 
-func (qb *InsertQueryBuilder) getValuesPart() (string, error) {
+func (qb *insertQueryBuilder) getValuesPart() (string, error) {
 	if len(qb.values) > 0 {
 		return getValuesString(qb.values), nil
 	} else if qb.valuesSelectSubQuery != nil {
@@ -71,7 +71,7 @@ func (qb *InsertQueryBuilder) getValuesPart() (string, error) {
 	}
 }
 
-func (qb *InsertQueryBuilder) validate() error {
+func (qb *insertQueryBuilder) validate() error {
 	if qb.insertString == "" {
 		return errors.New("'insertString' param can not be empty")
 	}

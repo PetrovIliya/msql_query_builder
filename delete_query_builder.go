@@ -2,7 +2,7 @@ package msql_query_builder
 
 import "errors"
 
-type DeleteQueryBuilder struct {
+type deleteQueryBuilder struct {
 	joinQueryBuilder
 	whereQueryBuilder
 	orderByQueryBuilder
@@ -13,7 +13,7 @@ type DeleteQueryBuilder struct {
 	deleteStr string
 }
 
-func (qb *DeleteQueryBuilder) GetSql() (string, error) {
+func (qb *deleteQueryBuilder) GetSql() (string, error) {
 	if err := qb.validate(); err != nil {
 		return "", err
 	}
@@ -29,12 +29,12 @@ func (qb *DeleteQueryBuilder) GetSql() (string, error) {
 	return sql, nil
 }
 
-func (qb *DeleteQueryBuilder) getDeletePart() string {
+func (qb *deleteQueryBuilder) getDeletePart() string {
 
 	return "DELETE " + qb.deleteStr + " FROM `" + qb.table + "` " + qb.alias
 }
 
-func (qb DeleteQueryBuilder) validate() error {
+func (qb deleteQueryBuilder) validate() error {
 	err := qb.whereQueryBuilder.validate()
 	if err != nil {
 		return err

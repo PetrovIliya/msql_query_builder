@@ -4,17 +4,17 @@ import (
 	"errors"
 )
 
-type UnionSelectQueryBuilder struct {
+type unionSelectQueryBuilder struct {
 	joinQueryBuilder
 	whereQueryBuilder
 	groupByQueryBuilder
 	table     string
 	alias     string
 	selectStr string
-	unions    []*UnionSelectQueryBuilder
+	unions    []*unionSelectQueryBuilder
 }
 
-func (qb *UnionSelectQueryBuilder) GetSql() (string, error) {
+func (qb *unionSelectQueryBuilder) GetSql() (string, error) {
 	if err := qb.validate(); err != nil {
 		return "", err
 	}
@@ -33,18 +33,18 @@ func (qb *UnionSelectQueryBuilder) GetSql() (string, error) {
 	return sql, nil
 }
 
-func (qb *UnionSelectQueryBuilder) Union(union *UnionSelectQueryBuilder) {
+func (qb *unionSelectQueryBuilder) Union(union *unionSelectQueryBuilder) {
 	qb.unions = append(qb.unions, union)
 }
 
-func (qb *UnionSelectQueryBuilder) getSelectPart() string {
+func (qb *unionSelectQueryBuilder) getSelectPart() string {
 	if qb.selectStr == "" {
 		qb.selectStr = "*"
 	}
 	return "SELECT " + qb.selectStr
 }
 
-func (qb *UnionSelectQueryBuilder) getUnionPart() (string, error) {
+func (qb *unionSelectQueryBuilder) getUnionPart() (string, error) {
 	unionPart := ""
 	for i := 0; i < len(qb.unions); i++ {
 		sql, err := qb.unions[i].GetSql()
@@ -57,11 +57,11 @@ func (qb *UnionSelectQueryBuilder) getUnionPart() (string, error) {
 	return unionPart, nil
 }
 
-func (qb *UnionSelectQueryBuilder) getFromPart() string {
+func (qb *unionSelectQueryBuilder) getFromPart() string {
 	return "FROM" + " `" + qb.table + "` " + qb.alias + " " + qb.getJoinsPart()
 }
 
-func (qb *UnionSelectQueryBuilder) validate() error {
+func (qb *unionSelectQueryBuilder) validate() error {
 	err := qb.whereQueryBuilder.validate()
 	if err != nil {
 		return err

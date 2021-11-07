@@ -7,7 +7,7 @@ type setter struct {
 	value string
 }
 
-type UpdateQueryBuilder struct {
+type updateQueryBuilder struct {
 	joinQueryBuilder
 	whereQueryBuilder
 	orderByQueryBuilder
@@ -17,7 +17,7 @@ type UpdateQueryBuilder struct {
 	setters []setter
 }
 
-func (qb *UpdateQueryBuilder) GetSql() (string, error) {
+func (qb *updateQueryBuilder) GetSql() (string, error) {
 	err := qb.validate()
 	if err != nil {
 		return "", err
@@ -34,11 +34,11 @@ func (qb *UpdateQueryBuilder) GetSql() (string, error) {
 	return sql, nil
 }
 
-func (qb *UpdateQueryBuilder) Set(field string, value string) {
+func (qb *updateQueryBuilder) Set(field string, value string) {
 	qb.setters = append(qb.setters, setter{filed: field, value: value})
 }
 
-func (qb *UpdateQueryBuilder) SetSubQuery(field string, subQuery *SelectQueryBuilder) error {
+func (qb *updateQueryBuilder) SetSubQuery(field string, subQuery *selectQueryBuilder) error {
 	sql, err := subQuery.GetSql()
 	if err != nil {
 		return err
@@ -47,11 +47,11 @@ func (qb *UpdateQueryBuilder) SetSubQuery(field string, subQuery *SelectQueryBui
 	return nil
 }
 
-func (qb *UpdateQueryBuilder) getUpdatePart() string {
+func (qb *updateQueryBuilder) getUpdatePart() string {
 	return "UPDATE `" + qb.table + "` " + qb.alias
 }
 
-func (qb *UpdateQueryBuilder) getSetPart() string {
+func (qb *updateQueryBuilder) getSetPart() string {
 	firstSetter := qb.setters[0]
 	setStr := "SET " + firstSetter.filed + " = " + firstSetter.value
 
@@ -63,7 +63,7 @@ func (qb *UpdateQueryBuilder) getSetPart() string {
 	return setStr
 }
 
-func (qb *UpdateQueryBuilder) validate() error {
+func (qb *updateQueryBuilder) validate() error {
 	err := qb.whereQueryBuilder.validate()
 	if err != nil {
 		return err
