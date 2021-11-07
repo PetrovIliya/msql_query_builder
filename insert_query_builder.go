@@ -98,7 +98,7 @@ func (qb *insertQueryBuilder) validate() error {
 func getValuesString(values [][]string) string {
 	valuesStr := "VALUES "
 	for i := 0; i < len(values); i++ {
-		valuesStr += "(" + values[i][0]
+		valuesStr += "('" + values[i][0] + "'"
 		for j := 1; j < len(values[i]); j++ {
 			value := values[i][j]
 			valuesStr += ", '" + value + "'"
