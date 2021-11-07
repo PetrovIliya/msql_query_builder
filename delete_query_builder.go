@@ -34,7 +34,7 @@ func (qb *deleteQueryBuilder) getDeletePart() string {
 	return "DELETE " + qb.deleteStr + " FROM `" + qb.table + "` " + qb.alias
 }
 
-func (qb deleteQueryBuilder) validate() error {
+func (qb *deleteQueryBuilder) validate() error {
 	err := qb.whereQueryBuilder.validate()
 	if err != nil {
 		return err
