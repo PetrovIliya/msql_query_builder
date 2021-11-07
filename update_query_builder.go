@@ -53,11 +53,11 @@ func (qb *updateQueryBuilder) getUpdatePart() string {
 
 func (qb *updateQueryBuilder) getSetPart() string {
 	firstSetter := qb.setters[0]
-	setStr := "SET " + firstSetter.filed + " = " + firstSetter.value
+	setStr := "SET " + firstSetter.filed + " = '" + firstSetter.value + "'"
 
 	for i := 1; i < len(qb.setters); i++ {
 		currSetter := qb.setters[i]
-		setStr += ", " + currSetter.filed + " = " + currSetter.value
+		setStr += ", " + currSetter.filed + " = '" + currSetter.value + "'"
 	}
 
 	return setStr
