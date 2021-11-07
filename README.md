@@ -24,6 +24,7 @@ So, if your application relies heavily on MySQL database and using the repositor
     selectQb.Limit(1)
     selectQb.Offset(2)
     selectQb.OrderBy("o.order_id DESC")
+    sqlStr, err := selectQb.GetSql()
 
 ## Union select
 
@@ -48,6 +49,7 @@ So, if your application relies heavily on MySQL database and using the repositor
     updateQb := qb.Update("order", "o")
 	updateQb.Set("o.cost", "(SELECT o2.cost FROM `order` o2 WHERE order_id = 2)")
 	updateQb.AndWhere("order_id = 1")
+	sqlStr, err := updateQb.GetSql()
 
 ## Insert by query
 
@@ -55,6 +57,7 @@ So, if your application relies heavily on MySQL database and using the repositor
     insertQb := qb.InsertInto("order", "(order_id, cost)")
     insertQb.Ignore(true)
     insertQb.ValuesQuery(selectQb)
+    sqlStr, err := insertQb.GetSql()
 
 ## Insert by union query
     unionSbQb := qb.UnionSelect("order", "o2", "order_id, cost")
