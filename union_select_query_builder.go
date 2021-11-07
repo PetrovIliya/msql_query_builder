@@ -5,11 +5,12 @@ import (
 )
 
 type UnionSelectQueryBuilder struct {
-	baseQueryBuilder
+	joinQueryBuilder
+	whereQueryBuilder
+	groupByQueryBuilder
 	table     string
 	alias     string
 	selectStr string
-	groupBy   string
 	unions    []*UnionSelectQueryBuilder
 }
 
@@ -30,10 +31,6 @@ func (qb *UnionSelectQueryBuilder) GetSql() (string, error) {
 		unionPart + " ",
 	)
 	return sql, nil
-}
-
-func (qb *UnionSelectQueryBuilder) GroupBy(groupBy string) {
-	qb.groupBy = groupBy
 }
 
 func (qb *UnionSelectQueryBuilder) Union(union *UnionSelectQueryBuilder) {
@@ -64,27 +61,25 @@ func (qb *UnionSelectQueryBuilder) getFromPart() string {
 	return "FROM" + " `" + qb.table + "` " + qb.alias + " " + qb.getJoinsPart()
 }
 
-func (qb *UnionSelectQueryBuilder) getGroupByPart() string {
-	if qb.groupBy == "" {
-		return ""
-	}
-	return "GROUP BY " + qb.groupBy
-}
-
 func (qb *UnionSelectQueryBuilder) validate() error {
-	err := qb.baseQueryBuilder.validate()
+	err := qb.whereQueryBuilder.validate()
 	if err != nil {
 		return err
 	}
 
-	if qb.table == "" {
-		return errors.New("'table' param is empty")
+	err = qb.joinQueryBuilder.validate()
+	if err != nil {
+		return err
 	}
 
 	for i := 0; i < len(qb.unions); i++ {
 		if qb.unions[i].selectStr != qb.selectStr {
 			return errors.New("different union select strings")
 		}
+	}
+
+	if qb.table == "" {
+		return errors.New("'table' param can not be empty")
 	}
 
 	return nil

@@ -8,14 +8,14 @@ func UnionSelect(table string, alias string, selectStr string) *UnionSelectQuery
 	return &UnionSelectQueryBuilder{table: table, selectStr: selectStr, alias: alias}
 }
 
-func Update(table string) *UpdateQueryBuilder {
-	return &UpdateQueryBuilder{table: table}
+func Update(table string, alias string) *UpdateQueryBuilder {
+	return &UpdateQueryBuilder{table: table, alias: alias}
 }
 
-func Delete(table string, deleteStr string) *DeleteQueryBuilder {
-	return &DeleteQueryBuilder{table: table, deleteStr: deleteStr}
+func Delete(table string, alias string, deleteStr string) *DeleteQueryBuilder {
+	return &DeleteQueryBuilder{table: table, deleteStr: deleteStr, alias: alias}
 }
 
-func Insert(table string, values [][]string) *InsertQueryBuilder {
-	return &InsertQueryBuilder{table: table, values: values}
+func InsertInto(insertString string) *InsertQueryBuilder {
+	return &InsertQueryBuilder{insertString: insertString, valuesUnionSubQuery: nil, valuesSelectSubQuery: nil}
 }
