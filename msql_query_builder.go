@@ -16,6 +16,6 @@ func Delete(table string, alias string, deleteStr string) *DeleteQueryBuilder {
 	return &DeleteQueryBuilder{table: table, deleteStr: deleteStr, alias: alias}
 }
 
-func InsertInto(insertString string) *InsertQueryBuilder {
-	return &InsertQueryBuilder{insertString: insertString, valuesUnionSubQuery: nil, valuesSelectSubQuery: nil}
+func InsertInto(table string, insertString string) *InsertQueryBuilder {
+	return &InsertQueryBuilder{table: table, insertString: insertString, valuesUnionSubQuery: nil, valuesSelectSubQuery: nil}
 }

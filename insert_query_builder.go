@@ -3,6 +3,7 @@ package msql_query_builder
 import "errors"
 
 type InsertQueryBuilder struct {
+	table                string
 	insertString         string
 	values               [][]string
 	ignore               bool
@@ -49,7 +50,7 @@ func (qb *InsertQueryBuilder) getInsertPart() string {
 	if qb.ignore {
 		ignoreStr = "IGNORE"
 	}
-	return "INSERT " + ignoreStr + " INTO " + qb.insertString
+	return "INSERT " + ignoreStr + " INTO `" + qb.table + "` " + qb.insertString
 }
 
 func (qb *InsertQueryBuilder) getValuesPart() (string, error) {
@@ -85,6 +86,10 @@ func (qb *InsertQueryBuilder) validate() error {
 				return errors.New("one of values empty")
 			}
 		}
+	}
+
+	if qb.table == "" {
+		return errors.New("'table' param can not be empty")
 	}
 
 	return nil

@@ -31,7 +31,7 @@ func (qb *DeleteQueryBuilder) GetSql() (string, error) {
 
 func (qb *DeleteQueryBuilder) getDeletePart() string {
 
-	return "DELETE " + qb.deleteStr + " FROM " + qb.table + " " + qb.alias
+	return "DELETE " + qb.deleteStr + " FROM `" + qb.table + "` " + qb.alias
 }
 
 func (qb DeleteQueryBuilder) validate() error {

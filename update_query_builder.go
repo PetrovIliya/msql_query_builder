@@ -25,6 +25,7 @@ func (qb *UpdateQueryBuilder) GetSql() (string, error) {
 
 	sql := escape(qb.getUpdatePart() + " " +
 		qb.getJoinsPart() + " " +
+		qb.getSetPart() + " " +
 		qb.getWherePart() + " " +
 		qb.getOrderByPart() + " " +
 		qb.getLimitPart() + " ",
@@ -47,7 +48,7 @@ func (qb *UpdateQueryBuilder) SetSubQuery(field string, subQuery *SelectQueryBui
 }
 
 func (qb *UpdateQueryBuilder) getUpdatePart() string {
-	return "UPDATE " + qb.table + " " + qb.alias
+	return "UPDATE `" + qb.table + "` " + qb.alias
 }
 
 func (qb *UpdateQueryBuilder) getSetPart() string {
