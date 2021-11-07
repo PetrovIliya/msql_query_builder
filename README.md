@@ -4,6 +4,12 @@ Query Builder makes it easier to build queries for MySQL databases.
 
 So, if your application relies heavily on MySQL database and using the repository pattern is too expensive for performance, then you should use query services in which you need to build optimized queries. This query builder will help you build large and readable queries
 
+# Installation
+
+1. Add the dependency `github.com/PetrovIliya/mysql_query_builder v0.1.0` to your go.mod file
+2. In the required file add import `qb "github.com/PetrovIliya/mysql_query_builder"`
+
+
 # Usage
 
 ## Select
