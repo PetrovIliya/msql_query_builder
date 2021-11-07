@@ -1,4 +1,4 @@
-# MySQL Query Builder
+# MySQL Query Builder for Golang
 
 Query Builder makes it easier to build queries for MySQL databases.
 
