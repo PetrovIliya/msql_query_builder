@@ -22,8 +22,6 @@ So, if your application relies heavily on MySQL database and using the repositor
 	orderIds[1] = "2"
 	
 	selectQb.AndWhereIn("o.order_id", orderIds)
-    selectQb.Limit(1)
-    selectQb.Offset(2)
     selectQb.OrderBy("o.order_id DESC")
     sqlStr, err := selectQb.GetSql()
 
